@@ -1,0 +1,27 @@
+# Directorios generados por IDEs
+.idea/
+
+# Archivos específicos de IntelliJ IDEA
+*.iml
+.idea/workspace.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+
+# Directorio de salida de compilación
+out/
+
+# Archivos de configuración de proyectos Eclipse
+.classpath
+.project
+.settings/
+
+# Archivos binarios compilados
+*.class
+
+# Archivos de registro
+*.log
+*.log.*
+
+# Archivos generados durante la construcción
+target/
