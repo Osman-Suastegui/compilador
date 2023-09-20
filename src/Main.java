@@ -44,18 +44,41 @@ public class Main {
         br.close();
         return contenido;
     }
+    private static boolean isRelational(String input){
 
+        return  input.equals("=>") || input.equals("==") || input.equals("!=") || input.equals("<=") || input.equals(">=") ;
+    }
+    private static boolean isAritmetic(int input){
+
+        return  input == '+' || input == '-' || input == '*' || input == '/' ;
+    }
     private static void procesarContenido(List<Contenido> contenido, AutomataIdentificadores AI, AutomataNumeros AN, LinkList listaEnlazada) throws Exception {
         int currIndx = 0;
 
         while (currIndx < contenido.size()) {
             int car = contenido.get(currIndx).getCaracter();
-
             if (Character.isLetter(car)) {
                 currIndx = AI.validar(currIndx);
             } else if (Character.isDigit(car)) {
                 currIndx = AN.validar(currIndx);
-            } else {
+            }
+//            si es relacional con dos caractereres
+            else if(currIndx +  1 < contenido.size() && isRelational( car + "" + contenido.get(currIndx + 1).getCaracter())){
+                currIndx +=2;
+//                CREAMOS TOKEN
+            }else if(car == '=' ) {
+                currIndx++;
+//                CREAMOS TOKEN
+//                si es relacional con 1 caracter
+            }else if(car == '>' || car == '<'){
+//                CREAMOS TOKEN
+                currIndx++;
+
+            }
+            else if(isAritmetic(car)) {
+//                creamos token
+                currIndx++;
+            }else {
                 currIndx++;
             }
         }
