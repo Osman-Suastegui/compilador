@@ -26,8 +26,11 @@ public class LinkList {
     public void imprimir(){
         Nodo aux = raiz;
         while(aux != null){
-            System.out.println(aux.getToken().getLexema());
             aux = aux.getSiguiente();
         }
+    }
+
+    public Nodo getRaiz() {
+        return raiz;
     }
 }

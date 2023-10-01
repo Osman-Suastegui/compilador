@@ -1,5 +1,7 @@
-adasd123
-+grw123
-+423.43
+"adasd1233"+grw123
+num1
++423.2
 d0=0.43
+>
 hAla132d
+<=ww-!=Mientras==Fin

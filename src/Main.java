@@ -1,7 +1,6 @@
-import lexico.AutomataIdentificadores;
-import lexico.AutomataNumeros;
-import lexico.Contenido;
-import lexico.LinkList;
+import lexico.*;
+import lexico.tablaDeSimbolos.AtributosSimbolo;
+import lexico.tablaDeSimbolos.TablaSimbolos;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,12 +13,35 @@ public class Main {
         LinkList listaEnlazada = new LinkList();
         AutomataIdentificadores AI = new AutomataIdentificadores(contenido, listaEnlazada);
         AutomataNumeros AN = new AutomataNumeros(contenido, listaEnlazada);
+        AutomataCadena AC = new AutomataCadena(contenido,listaEnlazada);
+        procesarContenido(contenido, AI, AN,AC, listaEnlazada);
+        insertarEnTablaDeSimbolos(listaEnlazada);
+        TablaSimbolos t = TablaSimbolos.obtenerInstancia();
+        System.out.println(t.toString());
 
-        procesarContenido(contenido, AI, AN, listaEnlazada);
-
-        System.out.println("LISTA ENLAZADA: ");
-        listaEnlazada.imprimir();
     }
+
+//    esta funcion hace uso de la lista enlazada para construir una parte de la tabla de simbolos
+    public static void insertarEnTablaDeSimbolos(LinkList listaEnlazada){
+        listaEnlazada.imprimir();
+        Nodo nodo = listaEnlazada.getRaiz();
+        TablaSimbolos tabla = TablaSimbolos.obtenerInstancia();
+
+        while(nodo != null){
+            Token token = nodo.getToken();
+            String lexema = token.getLexema();
+
+            if(!tabla.existe(lexema)){
+                AtributosSimbolo atributos = new AtributosSimbolo();
+                atributos.setTipo(token.getTipo());
+                atributos.setValor(token.getValor());
+                tabla.insertar(lexema,atributos);
+            }
+            nodo = nodo.getSiguiente();
+        }
+
+    }
+
 
     private static List<Contenido> leerContenidoDelArchivo(String filePath) throws IOException {
         List<Contenido> contenido = new ArrayList<>();
@@ -34,10 +56,12 @@ public class Main {
             if (c == 10) {
                 renglon++;
                 columna = 1;
-            }
-            if (c == 13) {
                 continue;
             }
+            if (c == 13 || c == 32) {
+                continue;
+            }
+
             contenido.add(new Contenido((char) c, renglon, columna));
             columna++;
         }
@@ -52,34 +76,46 @@ public class Main {
 
         return  input == '+' || input == '-' || input == '*' || input == '/' ;
     }
-    private static void procesarContenido(List<Contenido> contenido, AutomataIdentificadores AI, AutomataNumeros AN, LinkList listaEnlazada) throws Exception {
+    private static void procesarContenido(List<Contenido> contenido, AutomataIdentificadores AI, AutomataNumeros AN, AutomataCadena AC, LinkList listaEnlazada) throws Exception {
         int currIndx = 0;
 
         while (currIndx < contenido.size()) {
             int car = contenido.get(currIndx).getCaracter();
             if (Character.isLetter(car)) {
-                currIndx = AI.validar(currIndx);
+                currIndx = AI.validar(currIndx,"");
             } else if (Character.isDigit(car)) {
+
                 currIndx = AN.validar(currIndx);
+            }else if(car == 34){
+                currIndx = AC.validar(currIndx);
             }
 //            si es relacional con dos caractereres
-            else if(currIndx +  1 < contenido.size() && isRelational( car + "" + contenido.get(currIndx + 1).getCaracter())){
-                currIndx +=2;
-//                CREAMOS TOKEN
-            }else if(car == '=' ) {
-                currIndx++;
-//                CREAMOS TOKEN
-//                si es relacional con 1 caracter
-            }else if(car == '>' || car == '<'){
-//                CREAMOS TOKEN
-                currIndx++;
 
+            else if(currIndx +  1 < contenido.size() && isRelational ((char) car + "" + contenido.get(currIndx + 1).getCaracter())){
+                String lex = (char) car + "" + contenido.get(currIndx + 1).getCaracter();
+                Token token = new Token(TipoToken.OP_RELACIONAL,lex,0.0,0,0);
+                listaEnlazada.insertar(token);
+                currIndx += 2;
+            }else if(car == '=' ) {
+                Token token = new Token(TipoToken.OP_ASIGNACION,"=",0.0,0,0);
+                listaEnlazada.insertar(token);
+
+                currIndx++;
+            }else if(car == '>' || car == '<'){
+                //si es relacional con 1 caracter
+                String lex = (char) car + "";
+                Token token = new Token(TipoToken.OP_RELACIONAL,lex,0.0,0,0);
+                listaEnlazada.insertar(token);
+                currIndx++;
             }
             else if(isAritmetic(car)) {
-//                creamos token
+                String lexema = (char) car + "";
+                Token token = new Token(TipoToken.OP_ARITMETICO,lexema,0.0,0,0);
+                listaEnlazada.insertar(token);
                 currIndx++;
             }else {
-                currIndx++;
+                String caracterErroneo = (char) car + "";
+                throw new Exception("CARACTER " + caracterErroneo + " NO VALIDO EN LA LINEA " + contenido.get(currIndx).getRenglon());
             }
         }
     }

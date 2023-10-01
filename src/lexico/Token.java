@@ -2,16 +2,30 @@ package lexico;
 
 public class Token {
 
-    TipoToken tipo;
-    String lexema;
-    int valor;
+    private TipoToken tipo;
+    private String lexema;
+    private Double valor = 0.0;
 
-    int renglon;
-    int columna;
+    private int renglon;
+    private int columna;
 
+    public Token(TipoToken tipo, String lexema, Double valor, int renglon, int columna) {
+        this.tipo = tipo;
+        this.lexema = lexema;
+        this.valor = valor;
+        this.renglon = renglon;
+        this.columna = columna;
+    }
+    public Token() {
+
+    }
 
     public String getLexema() {
         return lexema;
+    }
+
+    public TipoToken getTipo() {
+        return tipo;
     }
 
     public void setTipo(TipoToken tipo) {
@@ -22,8 +36,12 @@ public class Token {
         this.lexema = lexema;
     }
 
-    public void setValor(int valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Double getValor() {
+        return valor;
     }
 
     public void setRenglon(int renglon) {

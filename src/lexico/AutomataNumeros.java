@@ -23,11 +23,12 @@ public class AutomataNumeros {
                 currChar = contenido.get(currIndx).getCaracter();
             }
         }
-        System.out.println("Token: " + lexema);
+
 
         Token token = new Token();
         token.setLexema(lexema);
         token.setTipo(TipoToken.NUMERO);
+        token.setValor(Double.parseDouble(lexema));
         listaEnlazada.insertar(token);
         return currIndx;
 
