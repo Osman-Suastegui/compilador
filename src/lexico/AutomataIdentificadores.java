@@ -20,7 +20,9 @@ public class AutomataIdentificadores {
         return misPalabrasReservadas.contains(palabra);
     }
 
-    public int validar(int currindx,String lexema) throws Exception {
+    public int validar(int currindx,String lexema,int startRenglon,int startColumna) throws Exception {
+
+
         if(currindx >= contenido.size()){
             Token token = new Token();
             token.setLexema(lexema);
@@ -30,14 +32,17 @@ public class AutomataIdentificadores {
             }else{
                 token.setTipo(TipoToken.IDENTIFICADOR);
             }
+            token.setColumna(startColumna);
+            token.setRenglon(startRenglon);
 
             listaEnlazada.insertar(token);
             return  currindx;
         }
+
         int c = contenido.get(currindx).getCaracter();
         if(Character.isDigit(c) || Character.isLetter(c) ) {
             lexema += (char) c;
-            return this.validar(currindx + 1, lexema);
+            return this.validar(currindx + 1, lexema,startRenglon,startColumna);
         }
 
         Token token = new Token();
@@ -47,6 +52,8 @@ public class AutomataIdentificadores {
         }else{
             token.setTipo(TipoToken.IDENTIFICADOR);
         }
+        token.setColumna(startColumna);
+        token.setRenglon(startRenglon);
         listaEnlazada.insertar(token);
         return currindx;
 

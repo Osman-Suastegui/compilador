@@ -1,13 +1,15 @@
 package lexico.tablaDeSimbolos;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TablaSimbolos {
     private static TablaSimbolos instancia; // Instancia única de la tabla de símbolos
 
 //    unordered map
-    private  Map<String, AtributosSimbolo> tabla = new LinkedHashMap<>();
+    private List<AtributosSimbolo> tabla = new ArrayList<>();
 
 
     private TablaSimbolos() {}
@@ -19,24 +21,20 @@ public class TablaSimbolos {
     }
 
 
-    public void insertar(String lexema, AtributosSimbolo atributos) {
-        this.tabla.put(lexema, atributos);
+    public void insertar(AtributosSimbolo atributos) {
+        tabla.add(atributos);
+
+
     }
 
-    public AtributosSimbolo buscar(String lexema) {
-        return this.tabla.get(lexema);
-    }
 
-    public boolean existe(String lexema) {
-        return this.tabla.containsKey(lexema);
-    }
 
     @Override
     public String toString() {
-        String res = String.format("%-20s" ,"LEXEMA")  + String.format("%-20s","TIPO") + String.format("%-20s","VALOR") + "\n";
+        String res = String.format("%-20s" ,"LEXEMA")  + String.format("%-20s","TIPO") + String.format("%-20s","VALOR") +  String.format("%-20s","RENGLON") + String.format("%-20s","COLUMNA") + "\n";
 
-        for(Map.Entry<String, AtributosSimbolo> entry : this.tabla.entrySet()) {
-            res += String.format("%-20s" ,entry.getKey())  + String.format("%-20s",entry.getValue().toString())+ "\n";
+        for(AtributosSimbolo a : this.tabla) {
+            res += String.format("%-20s" ,a.getLexema())  + String.format("%-20s",a.getTipo() ) + String.format("%-20s",a.getValor()) +  String.format("%-20s",a.getRenglon()) + String.format("%-20s",a.getColumna()) + "\n";
         }
         return res;
 
