@@ -14,6 +14,8 @@ public class AutomataNumeros {
 
     public int validar(int currIndx) {
         char currChar = contenido.get(currIndx).getCaracter();
+        int currRenglon = contenido.get(currIndx).getRenglon();
+        int currColumna = contenido.get(currIndx).getColumna();
         String lexema = "";
         while (currIndx < contenido.size() && (Character.isDigit(currChar) || (currChar == '.' && lexema.indexOf(".") == -1))) {
 
@@ -29,6 +31,8 @@ public class AutomataNumeros {
         token.setLexema(lexema);
         token.setTipo(TipoToken.NUMERO);
         token.setValor(Double.parseDouble(lexema));
+        token.setRenglon(currRenglon);
+        token.setColumna(currColumna);
         listaEnlazada.insertar(token);
         return currIndx;
 

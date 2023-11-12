@@ -1,7 +1,6 @@
-"adasd1233"+grw123
-num1
-+423.2
-d0=0.43
->
-hAla132d
-<=ww-!=Mientras==Fin
+Escribir "Hola Mundo
+asa MIENTRAS "micadena1" <> "micadena2"
+b=40.a25+1 +++ 30#
+Mientras
+Inicio Fin Si
+Leer Escribir

@@ -1,5 +1,7 @@
 package lexico;
 
+import lexico.tablaDeSimbolos.ManejadorErrores;
+
 import java.util.List;
 
 public class AutomataCadena {
@@ -12,7 +14,10 @@ public class AutomataCadena {
     }
 
     public int validar(int indx) throws Exception {
+        ManejadorErrores manejadorErrores = ManejadorErrores.obtenerInstancia();
         int fila = this.contenido.get(indx).getRenglon();
+        int currRenglon = this.contenido.get(indx).getRenglon();
+        int currColumna = this.contenido.get(indx).getColumna();
         String lexema = "";
         int comillas = 34;
 
@@ -21,13 +26,16 @@ public class AutomataCadena {
             int currCaracter = this.contenido.get(j).getCaracter();
 
             if (this.contenido.get(j).getRenglon() != fila) {
-                throw new Exception("Error en la fila " + fila + " no hay comillas de cierre");
+                manejadorErrores.agregarError("Error en la fila " + fila + " no hay comillas de cierre");
+                return j;
             }
 
             if (currCaracter == comillas) {
                 Token token = new Token();
                 token.setLexema(lexema);
                 token.setTipo(TipoToken.CADENA);
+                token.setColumna(currColumna);
+                token.setRenglon(currRenglon);
                 listaEnlazada.insertar(token);
                 return j + 1;
             }
@@ -36,8 +44,8 @@ public class AutomataCadena {
             lexema += (char) currCaracter;
             j++;
         }
-
-        throw new Exception("Error en la fila" + fila + " no hay comillas de cierre");
+        manejadorErrores.agregarError("Error en la fila " + fila + " no hay comillas de cierre");
+        return j;
 
     }
 }

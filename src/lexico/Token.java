@@ -51,4 +51,11 @@ public class Token {
     public void setColumna(int columna) {
         this.columna = columna;
     }
+
+    public int getRenglon() {
+        return this.renglon;
+    }
+    public int getColumna() {
+        return this.columna;
+    }
 }
