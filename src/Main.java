@@ -1,6 +1,7 @@
 import lexico.*;
 import lexico.tablaDeSimbolos.AtributosSimbolo;
 import lexico.tablaDeSimbolos.TablaSimbolos;
+import sintactico.MainSintactico;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,10 +19,12 @@ public class Main {
         insertarEnTablaDeSimbolos(listaEnlazada);
         TablaSimbolos t = TablaSimbolos.obtenerInstancia();
         System.out.println(t.toString());
+        MainSintactico sint = new MainSintactico(listaEnlazada);
 
     }
 
-//    esta funcion hace uso de la lista enlazada para construir una parte de la tabla de simbolos
+
+    //    esta funcion hace uso de la lista enlazada para construir una parte de la tabla de simbolos
     public static void insertarEnTablaDeSimbolos(LinkList listaEnlazada){
         listaEnlazada.imprimir();
         Nodo nodo = listaEnlazada.getRaiz();
