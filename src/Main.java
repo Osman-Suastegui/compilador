@@ -20,12 +20,9 @@ public class Main {
         insertarEnTablaDeSimbolos(listaEnlazada);
         TablaSimbolos t = TablaSimbolos.obtenerInstancia();
         System.out.println(t.toString());
-<<<<<<< HEAD
         MainSintactico sint = new MainSintactico(listaEnlazada);
-=======
         ManejadorErrores manejadorErrores = ManejadorErrores.obtenerInstancia();
         manejadorErrores.mostrarErrores();
->>>>>>> fbcb55c62e44081cc91b1ae54c88351a40425bf0
 
     }
 

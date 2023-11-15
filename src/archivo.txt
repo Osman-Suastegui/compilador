@@ -1,6 +1,14 @@
-Escribir "Hola Mundo
-asa MIENTRAS "micadena1" <> "micadena2"
-b=40.a25+1 +++ 30#
-Mientras
-Inicio Fin Si
-Leer Escribir
+Inicio
+    Si a == b Entonces
+        Si d == c Entonces
+
+        Sino
+        Mientras x == y Entonces
+        FinMientras
+        FinSi
+    FinSi
+    Mientras b == d Entonces
+
+    FinMientras
+
+Fin

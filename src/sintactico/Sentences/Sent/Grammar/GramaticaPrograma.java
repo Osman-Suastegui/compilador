@@ -16,26 +16,7 @@ public class GramaticaPrograma {
         this.AST = AST;
     }
 
-    public boolean validar(){
-        if(nodoListaEnlazada == null){
-            return false;
-        }
-        if(nodoListaEnlazada.getToken().getLexema().equals("Inicio")){
-            nodoListaEnlazada = nodoListaEnlazada.getSiguiente();
-        }
-        while(nodoListaEnlazada != null && nodoListaEnlazada.getSiguiente() != null )
-        {
 
-            verificarTokenType(nodoListaEnlazada, AST);
-
-            nodoListaEnlazada = nodoListaEnlazada.getSiguiente();
-
-        }
-        if(nodoListaEnlazada != null && nodoListaEnlazada.getToken().getLexema().equals("Fin")){
-            return true;
-        }
-        return false;
-    }
 
 
     public String verificarTokenType(Nodo nodo, List<Sentences> AST){
