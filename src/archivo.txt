@@ -1,14 +1,12 @@
 Inicio
-    Si a == b Entonces
-        Si d == c Entonces
 
-        Sino
-        Mientras x == y Entonces
-        FinMientras
-        FinSi
+    Si a > b Entonces
+        Escribir "a es mayor que b"
+
     FinSi
-    Mientras b == d Entonces
-
-    FinMientras
-
+    Mientras a > b Entonces
+        Escribir "a es mayor que b"
+        Leer abcd123
+     FinMientras
+    Leer hola
 Fin

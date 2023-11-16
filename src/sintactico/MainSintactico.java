@@ -10,6 +10,7 @@ import sintactico.Sentences.Sentences;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainSintactico {
@@ -61,8 +62,12 @@ public class MainSintactico {
                 return GramaticaSi();
             case "Mientras":
                 return GramaticaMientras();
+            case "Escribir":
+                return GramaticaEscribir();
+            case "Leer":
+                return GramaticaLeer();
         }
-//        System.out.println("No se reconoce el token " + this.current.getToken().getLexema());
+        System.out.println("No se reconoce el token " + this.current.getToken().getLexema());
         return null;
 
     }
@@ -166,6 +171,49 @@ public class MainSintactico {
         }
         this.current = this.current.getSiguiente();
         return new NodoMientras(condition, body);
+    }
+    private NodoAST GramaticaEscribir() {
+        if(!this.current.getToken().getLexema().equals("Escribir")){
+            System.out.println("Falta Escribir");
+            // por hacer Manejar error: Falta Escribir"
+            return null;
+        }
+        this.current = this.current.getSiguiente();
+        String contenidoNodoEscribir;
+        if(this.current.getToken().getTipo().equals(TipoToken.CADENA)){
+            contenidoNodoEscribir = this.current.getToken().getLexema();
+        }else if(this.current.getToken().getTipo().equals(TipoToken.NUMERO)){
+            contenidoNodoEscribir = this.current.getToken().getLexema();
+        }else if(this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR)){
+            contenidoNodoEscribir = this.current.getToken().getLexema();
+        }
+        else {
+            System.out.println("ERROR EN ESCRIBIR");
+            return null;
+        }
+        this.current = this.current.getSiguiente();
+
+        return new NodoEscribir(contenidoNodoEscribir);
+    }
+
+    public NodoAST GramaticaLeer() {
+        if(!this.current.getToken().getLexema().equals("Leer")){
+            System.out.println("Falta Leer");
+            // por hacer Manejar error: Falta Leer"
+            return null;
+        }
+        this.current = this.current.getSiguiente();
+        String identificadorLeer;
+         if(this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR)){
+            identificadorLeer = this.current.getToken().getLexema();
+        }
+        else {
+            System.out.println("ERROR EN LEER");
+            return null;
+        }
+        this.current = this.current.getSiguiente();
+
+        return new NodoLeer(identificadorLeer);
     }
 
 }
