@@ -1,6 +1,5 @@
 package sintactico.Sentences.Sent;
 
-import sintactico.Sentences.Sentences;
 
 import java.util.List;
 

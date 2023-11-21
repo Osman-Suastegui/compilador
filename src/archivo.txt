@@ -1,12 +1,15 @@
 Inicio
-
-    Si a > b Entonces
-        Escribir "a es mayor que b"
-
-    FinSi
-    Mientras a > b Entonces
-        Escribir "a es mayor que b"
-        Leer abcd123
+    Num miVariable
+    Si a > 0 Entonces
+     Mientras b > d Entonces
+         a = a - 1
+         b = b - 1
+         Si a > b Entonces
+             miVariable = a
+         Sino
+             Cadena miCadena
+             miCadena = "Hola"
+         FinSi
      FinMientras
-    Leer hola
+    FinSi
 Fin

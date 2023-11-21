@@ -1,8 +1,6 @@
 package sintactico.Sentences.Sent;
 
-import lexico.Nodo;
-import sintactico.Sentences.Sentences;
-import sintactico.ExpRel.ExpRel;
+
 
 import java.util.List;
 

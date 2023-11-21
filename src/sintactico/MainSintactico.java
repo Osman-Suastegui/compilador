@@ -3,14 +3,8 @@ package sintactico;
 import lexico.LinkList;
 import lexico.Nodo;
 import lexico.TipoToken;
-import org.w3c.dom.Node;
 import sintactico.Sentences.Sent.*;
-import sintactico.Sentences.Sent.Grammar.GramaticaPrograma;
-import sintactico.Sentences.Sentences;
-
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class MainSintactico {
@@ -66,11 +60,21 @@ public class MainSintactico {
                 return GramaticaEscribir();
             case "Leer":
                 return GramaticaLeer();
+            case "Num" :
+                return GramaticaDeclaracionVariable();
+            case "Cadena" :
+                return GramaticaDeclaracionVariable();
+        }
+        if(this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR)){
+            return GramaticaAsignacion();
         }
         System.out.println("No se reconoce el token " + this.current.getToken().getLexema());
         return null;
 
     }
+
+
+
     private NodoAST GramaticaSi() {
 
         if(!this.current.getToken().getLexema().equals("Si")){
@@ -117,8 +121,8 @@ public class MainSintactico {
 
     }
     private  NodoAST GramaticaRelacional(){
-        if(!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR)){
-            System.out.println("Falta identificador");
+        if(!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR) && !this.current.getToken().getTipo().equals(TipoToken.NUMERO) && !this.current.getToken().getTipo().equals(TipoToken.CADENA)){
+            System.out.println("Error en gramatica relacional");
             // por hacer Manejar error: tipo de token no es identificador
             return null;
         }
@@ -133,7 +137,7 @@ public class MainSintactico {
         String operador = this.current.getToken().getLexema();
         this.current = this.current.getSiguiente();
 
-        if(!this.current.getToken().getTipo().equals( TipoToken.IDENTIFICADOR)){
+        if(!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR) && !this.current.getToken().getTipo().equals(TipoToken.NUMERO) && !this.current.getToken().getTipo().equals(TipoToken.CADENA)){
             System.out.println("Falta identificador");
             // por hacer Manejar error: Falta identificador
             return null;
@@ -215,5 +219,55 @@ public class MainSintactico {
 
         return new NodoLeer(identificadorLeer);
     }
+    private NodoAST GramaticaDeclaracionVariable() {
+        if(!this.current.getToken().getLexema().equals("Num") && !this.current.getToken().getLexema().equals("Cadena")){
+            System.out.println("Error en declaracion de variable1");
+            return null;
+        }
+        String tipo = this.current.getToken().getLexema();
+        this.current = this.current.getSiguiente();
+        if(!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR)){
+            System.out.println("Error en declaracion de variable2");
+            return null;
+        }
+
+        String nombre = this.current.getToken().getLexema();
+        this.current = this.current.getSiguiente();
+        return new NodoDeclaracionVariable(tipo, nombre);
+    }
+    private NodoAST GramaticaAsignacion() {
+        if(!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR)){
+            System.out.println("Error en asignacion");
+            return null;
+        }
+        String nombre = this.current.getToken().getLexema();
+        this.current = this.current.getSiguiente();
+        if(!this.current.getToken().getTipo().equals(TipoToken.OP_ASIGNACION)){
+            System.out.println("Error en asignacion");
+            return null;
+        }
+        this.current = this.current.getSiguiente();
+        if(!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR) && !this.current.getToken().getTipo().equals(TipoToken.NUMERO) && !this.current.getToken().getTipo().equals(TipoToken.CADENA)){
+            System.out.println("Error en asignacion");
+            return null;
+        }
+        String valor1 = this.current.getToken().getLexema();
+        this.current = this.current.getSiguiente();
+
+        if(this.current != null && this.current.getToken().getTipo().equals(TipoToken.OP_ARITMETICO)){
+            String operador = this.current.getToken().getLexema();
+            this.current = this.current.getSiguiente();
+            if(!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR) && !this.current.getToken().getTipo().equals(TipoToken.NUMERO) && !this.current.getToken().getTipo().equals(TipoToken.CADENA)){
+                System.out.println("Error en asignacion");
+                return null;
+            }
+            String valor2 = this.current.getToken().getLexema();
+            this.current = this.current.getSiguiente();
+            return new NodoAsignacion(nombre, valor1, valor2, operador);
+        }
+
+        return new NodoAsignacion(nombre, valor1);
+    }
+
 
 }
