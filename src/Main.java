@@ -18,8 +18,9 @@ public class Main {
         AutomataCadena AC = new AutomataCadena(contenido,listaEnlazada);
         procesarContenido(contenido, AI, AN,AC, listaEnlazada);
         insertarEnTablaDeSimbolos(listaEnlazada);
-        TablaSimbolos t = TablaSimbolos.obtenerInstancia();
-        System.out.println(t.toString());
+//        Imprimir tabla de simbolos
+//        TablaSimbolos t = TablaSimbolos.obtenerInstancia();
+//        System.out.println(t.toString());
         MainSintactico sint = new MainSintactico(listaEnlazada);
         ManejadorErrores manejadorErrores = ManejadorErrores.obtenerInstancia();
         manejadorErrores.mostrarErrores();

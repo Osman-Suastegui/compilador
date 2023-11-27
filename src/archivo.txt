@@ -1,15 +1,7 @@
 Inicio
-    Num miVariable
     Si a > 0 Entonces
-     Mientras b > d Entonces
-         a = a - 1
-         b = b - 1
-         Si a > b Entonces
-             miVariable = a
-         Sino
-             Cadena miCadena
-             miCadena = "Hola"
-         FinSi
-     FinMientras
+        Escribir "a es positivo"
+        Sin
+        Escribir "a es negativo"
     FinSi
 Fin
