@@ -299,7 +299,7 @@ public class MainSintactico {
         if(this.current.getToken().getTipo().equals(TipoToken.OP_ARITMETICO)){
             String operador = this.current.getToken().getLexema();
             this.current = this.current.getSiguiente();
-            if(this.current == null || (!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR) && !this.current.getToken().getTipo().equals(TipoToken.NUMERO) && !this.current.getToken().getTipo().equals(TipoToken.CADENA))){
+            if(this.current == null || (!this.current.getToken().getTipo().equals(TipoToken.IDENTIFICADOR) && !this.current.getToken().getTipo().equals(TipoToken.NUMERO))){
                 manejadorErrores.agregarError("Error en asignacion: token identificador, numero o cadena esperado linea " + this.current.getToken().getRenglon() + " columna " + this.current.getToken().getColumna() );
                 return null;
             }
