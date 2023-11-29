@@ -33,4 +33,6 @@ public class LinkList {
     public Nodo getRaiz() {
         return raiz;
     }
+
+    public Nodo getUltimo(){return ultimo;}
 }
