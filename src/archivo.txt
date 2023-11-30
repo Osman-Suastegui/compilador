@@ -2,4 +2,4 @@ Inicio
     Si c > c Entonces
         Const Num miVARIABLE
     FinSi
-
+Fin
