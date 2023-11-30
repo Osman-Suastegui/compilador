@@ -26,6 +26,11 @@ public class ManejadorErrores {
     public List<String> getErrores() {
         return errores;
     }
+
+    public void setErrores(List<String> errores) {
+        this.errores = errores;
+    }
+
     public int getCantidadErrores() {
         return errores.size();
     }

@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 
 public class InterfazCompilador {
     private JPanel panel;
@@ -56,6 +57,7 @@ public class InterfazCompilador {
                     File selectedFile = fileChooser.getSelectedFile();
                     try {
                         selectedFile = new File(selectedFile.getAbsolutePath());
+                        filePath = selectedFile.getAbsolutePath();
                         Files.write(selectedFile.toPath(), codigoFuente.getText().getBytes());
                         estatusGuardado.setText("Archivo guardado");
 
@@ -70,13 +72,20 @@ public class InterfazCompilador {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Terminal.setText("");
+                manejadorErrores.setErrores(new ArrayList<>());
                 try {
                     MainLexico lexico =  new MainLexico(filePath);
                     for(String error : manejadorErrores.getErrores()) {
                         Terminal.append(error + "\n");
                     }
+                    if (manejadorErrores.getCantidadErrores() == 0) {
+                        Terminal.append("Compilación exitosa");
+                    }
+
                 } catch (Exception ex) {
-                    return ;
+
+                    throw new RuntimeException(ex);
+
                 }
 
             }
