@@ -22,6 +22,10 @@ public class ManejadorErrores {
             System.out.println(error);
         }
     }
+
+    public List<String> getErrores() {
+        return errores;
+    }
     public int getCantidadErrores() {
         return errores.size();
     }
